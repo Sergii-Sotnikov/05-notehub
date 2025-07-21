@@ -1,7 +1,7 @@
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import {fetchNotes} from "../../services/noteService";
 import css from "./App.module.css";
-import SearchBar from "../SearchBar/SearchBar";
+import SearchBar from "../SearchBox/SearchBox";
 import { useEffect, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import NoteList from "../NoteList/NoteList";
