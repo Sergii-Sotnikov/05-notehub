@@ -1,5 +1,7 @@
 import axios from "axios";
 import type { Note } from "../types/note";
+import type {NewNote} from "../types/newNote"
+
 
 interface NoteHttpResponse {
   notes: Note[];
@@ -11,10 +13,12 @@ interface fetchNotesProps {
   search?:string
 }
 
+
+
 const myKey = import.meta.env.VITE_NOTEHUB_TOKEN;
 
 
-export default async function fetchNotes({page, search}:fetchNotesProps): Promise<NoteHttpResponse> {
+export async function fetchNotes({page, search}:fetchNotesProps): Promise<NoteHttpResponse> {
   const url = `https://notehub-public.goit.study/api/notes`;
   const options = {
     headers: {
@@ -31,4 +35,33 @@ export default async function fetchNotes({page, search}:fetchNotesProps): Promis
 
   const response = await axios.get<NoteHttpResponse>(url, options);
   return response.data;
+}
+
+
+export async function postNote(values: NewNote): Promise<Note> {
+  const url = `https://notehub-public.goit.study/api/notes`;
+  const options = {
+    headers: {
+      accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${myKey}`,
+    }
+  };
+
+    const response = await axios.post<Note>(url,values, options)
+    return response.data;
+}
+
+
+export async function deleteNote(noteId: number){
+  const url = `https://notehub-public.goit.study/api/notes/${noteId}`;
+  const options = {
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${myKey}`,
+    }
+  };
+
+    const response = await axios.delete<Note>(url, options)
+    return response.data;
 }

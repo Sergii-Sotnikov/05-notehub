@@ -23,6 +23,7 @@
     "react-spinners": "^0.17.0",
     "toast": "^0.5.4",
     "use-debounce": "^10.0.5",
+    "yap": "^0.0.2",
     "yup": "^1.6.1"
   },
   "devDependencies": {

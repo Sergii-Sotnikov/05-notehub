@@ -1,5 +1,5 @@
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import fetchNotes from "../../services/noteService";
+import {fetchNotes} from "../../services/noteService";
 import css from "./App.module.css";
 import SearchBar from "../SearchBar/SearchBar";
 import { useEffect, useState } from "react";
@@ -9,11 +9,14 @@ import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import Paginate from "../Pagination/Pagination";
 import { useDebouncedCallback } from 'use-debounce';
+import Modal from "../Modal/Modal"
+import NoteForm from "../NoteForm/NoteForm"
 
-function App() {
+export default function App(){
 
   const [page, setPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
 
   const { data, isLoading, isError, isSuccess } = useQuery({
@@ -38,23 +41,34 @@ const debouncedSearch = useDebouncedCallback((value: string) => {
   setPage(1);
 }, 500);
 
+const openModal = () =>{
+  setIsModalOpen(true)
+}
+
+const closeModal = () =>{
+  setIsModalOpen(false);
+}
+
 
 
   return (
     <div className={css.app}>
-      <Toaster position="top-right" />
+      <Toaster position="top-center" />
       <header className={css.toolbar}>
         <SearchBar onSearch={debouncedSearch}/>
         {isSuccess && noteData.length > 0 && (
         <Paginate total={totalPages} onChange={setPage} page={page} />
       )}
-        <button className={css.button}>Create note +</button>
+        <button className={css.button} onClick={openModal}>Create note +</button>
       </header>
       {isLoading && <Loader/>}
       {isError && <ErrorMessage />}
       {noteData.length>0 && <NoteList dataForMurkup={noteData} />}
-    </div>
-  );
+      {isModalOpen && 
+      <Modal closeModal={closeModal}>
+      <NoteForm closeModal={closeModal}/>
+      </Modal>
+      }
+    </div>)
 }
 
-export default App;

@@ -6,3 +6,9 @@ export interface Note {
   updatedAt: string;
   tag: string;
 }
+
+export interface NewNote {
+  title: string;
+  content: string;
+  tag: string;
+}
