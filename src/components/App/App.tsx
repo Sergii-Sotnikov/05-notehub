@@ -1,13 +1,13 @@
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import {fetchNotes} from "../../services/noteService";
 import css from "./App.module.css";
-import SearchBar from "../SearchBox/SearchBox";
+import SearchBox from "../SearchBox/SearchBox";
 import { useEffect, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import NoteList from "../NoteList/NoteList";
 import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
-import Paginate from "../Pagination/Pagination";
+import Pagination from "../Pagination/Pagination";
 import { useDebouncedCallback } from 'use-debounce';
 import Modal from "../Modal/Modal"
 import NoteForm from "../NoteForm/NoteForm"
@@ -55,15 +55,15 @@ const closeModal = () =>{
     <div className={css.app}>
       <Toaster position="top-center" />
       <header className={css.toolbar}>
-        <SearchBar onSearch={debouncedSearch}/>
+        <SearchBox onSearch={debouncedSearch}/>
         {isSuccess && noteData.length > 0 && (
-        <Paginate total={totalPages} onChange={setPage} page={page} />
+        <Pagination total={totalPages} onChange={setPage} page={page} />
       )}
         <button className={css.button} onClick={openModal}>Create note +</button>
       </header>
       {isLoading && <Loader/>}
       {isError && <ErrorMessage />}
-      {noteData.length>0 && <NoteList dataForMurkup={noteData} />}
+      {noteData.length>0 && <NoteList notes={noteData} />}
       {isModalOpen && 
       <Modal closeModal={closeModal}>
       <NoteForm closeModal={closeModal}/>

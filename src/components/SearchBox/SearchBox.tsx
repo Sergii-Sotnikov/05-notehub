@@ -1,11 +1,11 @@
 import { useState } from "react";
 import css from "./SearchBox.module.css";
 
-interface SearchBarProps {
+interface SearchBoxProps {
   onSearch: (search: string) => void;
 }
 
-export default function SearchBar({ onSearch }: SearchBarProps) {
+export default function SearchBox({ onSearch }: SearchBoxProps) {
   const [inputValue, setInputValue] = useState<string>("");
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {

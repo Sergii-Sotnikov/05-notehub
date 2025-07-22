@@ -5,10 +5,10 @@ import {deleteNote} from "../../services/noteService"
 import { toast } from "react-hot-toast";
 
 interface NoteListProps {
-  dataForMurkup: Note[];
+  notes: Note[];
 }
 
-export default function NoteList({ dataForMurkup }: NoteListProps) {
+export default function NoteList({ notes }: NoteListProps) {
     const queryClient = useQueryClient()
 
 const mutation = useMutation({
@@ -24,7 +24,7 @@ const mutation = useMutation({
 
   return (
     <ul className={css.list}>
-      {dataForMurkup.map((note) => (
+      {notes.map((note) => (
         <li className={css.listItem} key={note.id}>
           <h2 className={css.title}>{note.title}</h2>
           <p className={css.content}>{note.content}</p>
